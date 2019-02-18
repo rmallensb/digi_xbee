@@ -23,3 +23,4 @@
  ```
  sudo python3 /home/pi/xbee_read.py &
  ```
+ - Note that in order to run the script on bootup with `rc.local`, the requirements will need to be installed with sudo permissions
