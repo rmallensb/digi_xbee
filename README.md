@@ -19,8 +19,13 @@
  - Alter xbee COM port in `xbee_read.py` to correct path
  - Alter baud_rate in `xbee_read.py` to correct value
  - Alter logfile in `xbee_read.py` to desired logfile path
- - Add following line to `/etc/rc.local` to have script run on bootup
+
+## To Run on Bootup
+ - If done with sudo, adding the following line to your `/etc/rc.local` will work
  ```
- sudo python3 /home/pi/xbee_read.py &
+ bash /home/pi/xbee_scan.sh
  ```
- - Note that in order to run the script on bootup with `rc.local`, the requirements will need to be installed with sudo permissions
+ - If done without sudo, add the following cronjob
+ ```
+ @reboot bash /home/pi/xbee_scan.sh
+ ```

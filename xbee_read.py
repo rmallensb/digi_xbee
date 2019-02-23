@@ -1,22 +1,26 @@
 from digi.xbee.devices import XBeeDevice
 from hexdump import hexdump
+import time, sys
 
 xbee_port = "/dev/ttyUSB0"
 baud_rate = 9600
-logfile   = "/home/pi/logfile.log"
+logfile   = "/home/pi/logfile.csv"
 
-device    = XBeeDevice(xbee_port, baud_rate)
+device  = XBeeDevice(xbee_port, baud_rate)
 
+def log(msg, rssi, output_log):
 
-def log(msg, rssi):
-
-    lf = open(logfile, "a")
-
-    lf.write("{}, {}\n".format(msg.data.decode(), rssi.decode()))
+    lf = open(output_log, "a")
+    lf.write("{}, {}, {}\n".format(time.time(), msg.data.decode(), rssi.decode()))
     lf.close()
 
 def main():
     device.open()
+
+    if len(sys.argv) < 2:
+        output_log = logfile
+    else:
+        output_log = sys.argv[1]
 
     while True:
         try:
@@ -30,11 +34,11 @@ def main():
                 remote_device = xbee_msg.remote_device
                 data          = xbee_msg.data
 
-                # Returns rssi info in -dBm
+                # We also want RSSI info
                 rssi = device.get_parameter("DB")
                 
-                log(xbee_msg, rssi)
-                
+                log(xbee_msg, rssi, output_log)
+
                 '''
                 # DEBUG
                 print("Received: {}\nFrom: {}".format(data, remote_device))
