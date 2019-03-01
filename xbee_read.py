@@ -11,7 +11,7 @@ device  = XBeeDevice(xbee_port, baud_rate)
 def log(msg, rssi, output_log):
 
     lf = open(output_log, "a")
-    lf.write("{}, {}, {}\n".format(time.time(), msg.data.decode(), rssi.decode()))
+    lf.write("{}, {}, {}\n".format(time.time(), msg.data.decode(), rssi.hex()))
     lf.close()
 
 def main():
