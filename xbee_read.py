@@ -6,8 +6,6 @@ default_port = "/dev/ttyUSB0"
 baud_rate    = 9600
 logfile      = "/home/pi/logfile.csv"
 
-device  = XBeeDevice(xbee_port, baud_rate)
-
 def log(msg, rssi, output_log):
 
     lf = open(output_log, "a")
@@ -15,8 +13,6 @@ def log(msg, rssi, output_log):
     lf.close()
 
 def main():
-    device.open()
-
     if len(sys.argv) < 2:
         output_log = logfile
         xbee_port  = default_port
@@ -26,6 +22,9 @@ def main():
     else:
         output_log = sys.argv[1]
         xbee_port  = sys.argv[2]
+
+    device = XBeeDevice(xbee_port, baud_rate)
+    device.open()
 
     while True:
         try:
