@@ -2,9 +2,9 @@ from digi.xbee.devices import XBeeDevice
 from hexdump import hexdump
 import time, sys
 
-xbee_port = "/dev/ttyUSB0"
-baud_rate = 9600
-logfile   = "/home/pi/logfile.csv"
+default_port = "/dev/ttyUSB0"
+baud_rate    = 9600
+logfile      = "/home/pi/logfile.csv"
 
 device  = XBeeDevice(xbee_port, baud_rate)
 
@@ -19,8 +19,13 @@ def main():
 
     if len(sys.argv) < 2:
         output_log = logfile
+        xbee_port  = default_port
+    else if len(sys.argv) < 3:
+        output_log = sys.argv[1]
+        xbee_port  = default_port
     else:
         output_log = sys.argv[1]
+        xbee_port  = sys.argv[2]
 
     while True:
         try:
