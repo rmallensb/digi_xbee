@@ -20,7 +20,7 @@ def main():
     if len(sys.argv) < 2:
         output_log = logfile
         xbee_port  = default_port
-    else if len(sys.argv) < 3:
+    elif len(sys.argv) < 3:
         output_log = sys.argv[1]
         xbee_port  = default_port
     else:
